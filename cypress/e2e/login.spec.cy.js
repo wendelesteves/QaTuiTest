@@ -83,4 +83,11 @@ describe('Login test spec', () => {
             .validateToastMessage('Username and password do not match any user in this service')
             .validateLoggedout()
     })
+
+    it('Login successfully pressing enter key instead of clicking "Login"', () => {
+        loginPage
+            .enterUsername(standardUser)
+            .enterPassword(password + '{enter}')
+            .validateLoggedIn()
+    })
 })

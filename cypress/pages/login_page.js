@@ -27,7 +27,8 @@ class LoginPage extends BasePage{
     enterPassword(value) {
         this.elementsHomePage.edPassword()
             .clear()
-            .type(value, {log: false}) // will not log it as sensitive information
+            .type(value, {log: false}) // will not log it, as is sensitive information
+        cy.log('* Password typed *')
 
         return this
     }
