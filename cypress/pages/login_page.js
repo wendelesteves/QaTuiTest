@@ -33,7 +33,7 @@ class LoginPage extends BasePage{
         return this
     }
 
-    logIn(username, password) {
+    login(username, password) {
         this.enterUsername(username)
             .enterPassword(password)
             .clickLogin()
@@ -49,7 +49,7 @@ class LoginPage extends BasePage{
     }
 
     validateLoggedIn() {
-        this.validateUrlBeEq('https://www.saucedemo.com/inventory.html')
+        this.validateUrlEquals('https://www.saucedemo.com/inventory.html')
             .validateLogoIsVisible()
             .validatePageTitle('Products')
 
@@ -64,7 +64,7 @@ class LoginPage extends BasePage{
     }
 
     validateLoggedout() {
-        this.validateUrlBeEq('https://www.saucedemo.com/')
+        this.validateUrlEquals('https://www.saucedemo.com/')
             .validateLoginLogoIsVisible()
 
         return this

@@ -12,16 +12,20 @@ const [password, standardUser, lockedOutUser] = [
 
 describe('Login test spec', () => {
     beforeEach(() => {
-        // clear cache and session data
-        cy.clearAllLocalStorage()
-        cy.clearAllSessionStorage()
-        cy.clearCookies()
-        cy.visit('') // visiting the base URL defined on the cypress.config.js file
+        loginPage
+            .clearCache() // clear cache and session data
+            .visitUrl('') // visiting the base URL defined on the cypress.config.js file
+    })
+
+    after(() => {
+        loginPage
+            .resetAppState()
+            .logout()
     })
 
     it('Login successfully', () => {
         loginPage
-            .logIn(standardUser, password)
+            .login(standardUser, password)
             .validateLoggedIn()
     })
 
@@ -50,21 +54,21 @@ describe('Login test spec', () => {
 
     it('Login attempt with a valid username and a wrong password', () => {
         loginPage
-            .logIn(standardUser, 'wrongPassword')
+            .login(standardUser, 'wrongPassword')
             .validateToastMessage('Username and password do not match any user in this service')
             .validateLoggedout()
     })
 
     it('Login attempt with a locked-out username', () => {
         loginPage
-            .logIn(lockedOutUser, password)
+            .login(lockedOutUser, password)
             .validateToastMessage('Sorry, this user has been locked out.')
             .validateLoggedout()
     })
 
     it('Logout', () => {
         loginPage
-            .logIn(standardUser, password)
+            .login(standardUser, password)
             .validateLoggedIn()
             .logout()
             .validateLoggedout()
@@ -72,14 +76,14 @@ describe('Login test spec', () => {
 
     it('White space handling when added to the username', () => {
         loginPage
-            .logIn(standardUser + ' ', password)
+            .login(standardUser + ' ', password)
             .validateToastMessage('Username and password do not match any user in this service')
             .validateLoggedout()
     })
 
     it('White space handling when added to the password', () => {
         loginPage
-            .logIn(standardUser, password + ' ')
+            .login(standardUser, password + ' ')
             .validateToastMessage('Username and password do not match any user in this service')
             .validateLoggedout()
     })

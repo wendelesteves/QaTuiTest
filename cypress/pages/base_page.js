@@ -6,8 +6,10 @@ class BasePage {
         btBurgerMenu: () => cy.get('#react-burger-menu-btn'),
         btCloseBurgerMenu: () => cy.get('#react-burger-cross-btn'),
         btBmAllItems: () => cy.get('#inventory_sidebar_link'),
+        btBmAbout: () => cy.get('#about_sidebar_link'),
         btBmLogout: () => cy.get('#logout_sidebar_link'),
         btBmResetAppState: () => cy.get('#reset_sidebar_link'),
+        lbCartBadge: () => cy.get('[data-test="shopping-cart-badge"]'),
     }
 
     clickCart() {
@@ -19,14 +21,14 @@ class BasePage {
 
     clickBurgerMenu() {
         this.elementsBasePage.btBurgerMenu()
-            .click()
+            .click({force: true})
 
         return this
     }
 
     clickCloseBurgerMenu() {
         this.elementsBasePage.btCloseBurgerMenu()
-            .click()
+            .click({force: true})
 
         return this
     }
@@ -47,14 +49,20 @@ class BasePage {
 
     clickResetAppState() {
         this.elementsBasePage.btBmResetAppState()
-            .click()
+            .click({force: true})
 
         return this
     }
 
-    validateUrlBeEq(url) {
+    visitUrl(url) {
+        cy.visit(url)
+
+        return this
+    }
+
+    validateUrlEquals(url) {
         cy.url()
-            .should('be.eq', url)
+            .should('equals', url)
 
         return this
     }
@@ -80,6 +88,34 @@ class BasePage {
         return this
     }
 
+    validateAbout() {
+        this.clickBurgerMenu()
+        this.elementsBasePage.btBmAbout()
+            .should('be.visible')
+            .and("have.attr", "href", "https://saucelabs.com/")
+        this.clickCloseBurgerMenu()
+
+        return this
+    }
+
+    validateCartBadge(number) {
+        this.elementsBasePage.lbCartBadge()
+            .scrollIntoView()
+            .should('exist')
+            .and('contain', number)
+            .and('have.css', 'color')
+            .and('eq', 'rgb(255, 255, 255)')
+
+        return this
+    }
+
+    validateNoCartBadge() {
+        this.elementsBasePage.lbCartBadge()
+            .should('not.exist')
+
+        return this
+    }
+
     logout() {
         this.clickBurgerMenu()
             .clickLogout()
@@ -89,6 +125,34 @@ class BasePage {
     resetAppState() {
         this.clickBurgerMenu()
             .clickResetAppState()
+            .clickCloseBurgerMenu()
+
+        return this
+    }
+
+    clearAllLocalStorage() {
+        cy.clearAllLocalStorage()
+
+        return this
+    }
+
+    clearAllSessionStorage() {
+        cy.clearAllSessionStorage()
+        
+        return this
+    }
+
+    clearCookies() {
+        cy.clearCookies()
+        
+        return this
+    }
+
+    clearCache() {
+        cy.clearAllLocalStorage()
+        cy.clearAllSessionStorage()
+        cy.clearCookies()
+
         return this
     }
 }
