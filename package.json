@@ -1,0 +1,22 @@
+{
+    "name": "qa_tui_test",
+    "version": "1.0.0",
+    "author": "wendel_esteves",
+    "license": "ISC",
+    "scripts": {
+        "cy-open": "cypress open",
+        "cy-verify": "cypress verify",
+        "cy-info": "cypress info",
+        "cy-run-all": "npx cypress run"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/wendelesteves/QaTuiTest.git"
+    },
+    "description": "UI Automation Test",
+    "devDependencies": {
+        "@faker-js/faker": "^8.4.1",
+        "cypress": "^13.13.1",
+        "cypress-mochawesome-reporter": "^3.8.2"
+    }
+}
