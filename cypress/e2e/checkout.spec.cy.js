@@ -14,7 +14,7 @@ const [product1, product2] = [
     productData.product2,
 ]
 
-describe('Test spec', () => {
+describe('Checkout test spec', () => {
     before(() => {
         checkoutCompletePage
             .clearCache() // clear cache and session data
@@ -286,6 +286,8 @@ describe('Test spec', () => {
             .validateProductNotOnCart(product1.name)
             .clickContinueShopping()
             .validateLoggedIn()
+            .validateAddToCartButtonByName(product1.name)
+            .validateRemoveButtonByName(product2.name)
             .validateCartBadge('1')
     })
 })

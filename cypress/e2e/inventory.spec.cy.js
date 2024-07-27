@@ -11,7 +11,7 @@ const [password, standardUser] = [
 ]
 const product = productData.product1
 
-describe('Test spec', () => {
+describe('Inventory test spec', () => {
     before(() => {
         inventoryItemPage
             .clearCache() // clear cache and session data
